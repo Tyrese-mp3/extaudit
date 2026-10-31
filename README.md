@@ -14,7 +14,7 @@ It never runs, imports or installs what it scans. It uses only the Python standa
 
 ## Run it
 
-You need Python 3.11 or newer. Run these from this folder; no install is required.
+You need Python 3.11 or newer. It is tested on 3.11 through 3.14 on Windows; Linux and macOS have not been tested. Run these from this folder; no install is required.
 
 Review everything installed on this machine:
 
@@ -228,3 +228,7 @@ python -m unittest discover -s tests -t .
 Test inputs are harmless strings built in temp folders or in memory. One sample stays in memory on purpose, because Windows Defender quarantines it as a trojan if it is written out, even though its URL goes nowhere.
 
 The tests never reach the internet. Online reading is tested against a fake registry shaped like the real APIs, plus a server on `127.0.0.1` for the real HTTP path.
+
+## License
+
+MIT. See [LICENSE](LICENSE). This software comes with no warranty, and a clean report is not a guarantee of anything.

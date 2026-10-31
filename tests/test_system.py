@@ -414,6 +414,28 @@ class CommandLine(unittest.TestCase):
             self.assertTrue(json.loads(output.read_text(encoding="utf-8"))["extensions"])
 
 
+class OwnSource(unittest.TestCase):
+    """A security tool should pass its own checks, and hide nothing from a reader."""
+
+    ROOT = Path(__file__).resolve().parent.parent
+
+    def test_source_is_plain_ascii(self):
+        names = [*self.ROOT.glob("extaudit/**/*.py"), *self.ROOT.glob("benchmark/*.py"), *self.ROOT.glob("tests/*.py")]
+        self.assertTrue(names)
+        for path in [*names, self.ROOT / "README.md", self.ROOT / "pyproject.toml"]:
+            self.assertTrue(path.read_bytes().isascii(), path.name)
+
+    def test_scanning_itself_raises_no_backdoor_findings(self):
+        extension = analyzers.analyze(loaders.load_directory(self.ROOT))
+        self.assertEqual([f"{f.rule} {f.file}:{f.line}" for f in extension.findings if f.severity >= Severity.MEDIUM], [])
+
+    def test_the_current_folder_has_a_name(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = write_tree(Path(folder) / "project", {"a.py": "x = 1\n"})
+            with contextlib.chdir(target):
+                self.assertEqual(loaders.load_directory(Path(".")).name, "project")
+
+
 class HostileFiles(unittest.TestCase):
     """Each input took minutes or forever before the fix, so a slow pass is a real failure."""
 

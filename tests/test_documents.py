@@ -55,11 +55,11 @@ class ToolDescriptions(unittest.TestCase):
         self.assertIn("read secrets", finding.snippet)
 
     def test_zero_width_characters(self):
-        ext = scan(manifest_with_tool("Adds​numbers."))
+        ext = scan(manifest_with_tool("Adds\u200bnumbers."))
         self.assertEqual(worst(ext, "instructions.invisible-text"), Severity.HIGH)
 
     def test_emoji_joiners_are_fine(self):
-        ext = scan(manifest_with_tool("Works with \U0001F468‍\U0001F4BB and ❤️."))
+        ext = scan(manifest_with_tool("Works with \U0001F468\u200d\U0001F4BB and \u2764\ufe0f."))
         self.assertNotIn("instructions.invisible-text", rules(ext))
 
     def test_long_description(self):

@@ -33,8 +33,8 @@ LOCK_FILES = {"package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock", "b
 ENCODED_BLOB = re.compile(r"""["'`]([A-Za-z0-9+/]{240,}={0,2})["'`]""")
 HEX_ESCAPES = re.compile(r"(?:\\x[0-9a-fA-F]{2}){24,}")
 NAME_LIST = re.compile(r"""^\s*[\[({]?\s*(?:["'][^"'\n]{1,80}["']\s*,\s*){2,}(?:["'][^"'\n]{1,80}["'])?\s*[\])}]?\s*,?\s*$""")
-INVISIBLE_RUN = re.compile("[​-‍⁠-⁤-︀-️\U000e0000-\U000e01ef]{6,}")
-BIDI_CONTROL = re.compile("[‪-‮⁦-⁩]")
+INVISIBLE_RUN = re.compile("[\u200b-\u200d\u2060-\u2064\ue000-\uf8ff\ufe00-\ufe0f\U000e0000-\U000e01ef]{6,}")
+BIDI_CONTROL = re.compile("[\u202a-\u202e\u2066-\u2069]")
 WORD = re.compile(r"[^\W\d_]{2,}")
 BINARY_STRING = re.compile(rb"[\x20-\x7e]{6,512}")
 MAX_BINARY_STRINGS = 200_000

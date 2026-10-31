@@ -95,7 +95,7 @@ class PackageFile:
 
     @property
     def text(self) -> str:
-        return self.data.decode("utf-8", errors="replace").removeprefix("﻿")
+        return self.data.decode("utf-8", errors="replace").removeprefix("\ufeff")
 
     @property
     def suffix(self) -> str:

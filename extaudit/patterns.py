@@ -125,17 +125,17 @@ NOT_SECRET_NAME = re.compile(r"(?i)(?:count|limit|len|length|url|uri|path|file|n
 
 # Letters from other alphabets that look identical to Latin ones.
 LOOKALIKES = str.maketrans({
-    "а": "a", "е": "e", "о": "o", "р": "p", "с": "c", "у": "y",
-    "х": "x", "і": "i", "ј": "j", "ѕ": "s", "һ": "h", "ԁ": "d",
-    "А": "A", "В": "B", "Е": "E", "К": "K", "М": "M", "Н": "H",
-    "О": "O", "Р": "P", "С": "C", "Т": "T", "Х": "X", "І": "I",
-    "Ј": "J", "Ѕ": "S", "α": "a", "ο": "o", "ι": "i", "ν": "v",
-    "Α": "A", "Β": "B", "Ε": "E", "Η": "H", "Ι": "I", "Κ": "K",
-    "Μ": "M", "Ν": "N", "Ο": "O", "Ρ": "P", "Τ": "T", "Χ": "X",
+    "\u0430": "a", "\u0435": "e", "\u043e": "o", "\u0440": "p", "\u0441": "c", "\u0443": "y",
+    "\u0445": "x", "\u0456": "i", "\u0458": "j", "\u0455": "s", "\u04bb": "h", "\u0501": "d",
+    "\u0410": "A", "\u0412": "B", "\u0415": "E", "\u041a": "K", "\u041c": "M", "\u041d": "H",
+    "\u041e": "O", "\u0420": "P", "\u0421": "C", "\u0422": "T", "\u0425": "X", "\u0406": "I",
+    "\u0408": "J", "\u0405": "S", "\u03b1": "a", "\u03bf": "o", "\u03b9": "i", "\u03bd": "v",
+    "\u0391": "A", "\u0392": "B", "\u0395": "E", "\u0397": "H", "\u0399": "I", "\u039a": "K",
+    "\u039c": "M", "\u039d": "N", "\u039f": "O", "\u03a1": "P", "\u03a4": "T", "\u03a7": "X",
 })
 LOOKALIKE_LETTERS = {chr(key) for key in LOOKALIKES}
 SPACED_LETTERS = re.compile(r"\b(?:[A-Za-z][ .\-_]){3,}[A-Za-z]\b")
-INVISIBLE_CHARS = re.compile("[​-‏⁠-⁤﻿­︀-️\U000e0000-\U000e01ef]")
+INVISIBLE_CHARS = re.compile("[\u200b-\u200f\u2060-\u2064\ufeff\u00ad\ufe00-\ufe0f\U000e0000-\U000e01ef]")
 
 
 def skeleton(text: str) -> str:

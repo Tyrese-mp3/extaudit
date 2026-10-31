@@ -50,7 +50,7 @@ def tokenize(source: str, line: int = 1, depth: int = 0) -> list[Token]:
         if char == "\n":
             line += 1
             index += 1
-        elif char in " \t\r\f\v﻿":
+        elif char in " \t\r\f\v\ufeff":
             index += 1
         elif char == "/" and source.startswith("//", index):
             end = source.find("\n", index)

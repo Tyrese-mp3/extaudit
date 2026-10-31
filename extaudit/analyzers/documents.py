@@ -51,10 +51,10 @@ OVERRIDE = re.compile(
     r"|\bignore[zr]?\s+(?:toutes?\s+)?(?:les\s+|vos\s+|tes\s+)?instructions\b"
     r"|\bignorier\w*\s+(?:alle\s+)?(?:\w+\s+)?anweisungen\b"
     r"|\bignora\s+(?:tutte\s+)?(?:le\s+)?istruzioni\b"
-    r"|\bignore\s+(?:todas\s+)?(?:as\s+)?instru[cç][oõ]es\b"
-    "|игнорируй\\w*\\s+(?:\\w+\\s+)?(?:инструкци|указани)"
-    "|忽略.{0,8}(?:指令|说明|指示|提示)"
-    "|(?:指示|命令).{0,8}無視"
+    r"|\bignore\s+(?:todas\s+)?(?:as\s+)?instru[c\u00e7][o\u00f5]es\b"
+    "|\u0438\u0433\u043d\u043e\u0440\u0438\u0440\u0443\u0439\\w*\\s+(?:\\w+\\s+)?(?:\u0438\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438|\u0443\u043a\u0430\u0437\u0430\u043d\u0438)"
+    "|\u5ffd\u7565.{0,8}(?:\u6307\u4ee4|\u8bf4\u660e|\u6307\u793a|\u63d0\u793a)"
+    "|(?:\u6307\u793a|\u547d\u4ee4).{0,8}\u7121\u8996"
 )
 # Only meaningful in a tool description. Real skills and docs say "Developer Mode in Discord"
 # and "the statement you are now attempting", so these cannot apply to free-form text.
@@ -96,7 +96,7 @@ CONCEAL = re.compile(
 WITHOUT_TELLING = re.compile(
     r"(?i)\bwithout\s+(?:telling|informing|notifying|alerting)\b[^.\n]{0,20}\b(?:the user|the human)\b"
 )
-QUOTES = "\"'`“”‘’"
+QUOTES = "\"'`\u201c\u201d\u2018\u2019"
 EXFIL = re.compile(
     r"(?i)\b(?:send|upload|post|forward|transmit|exfiltrate)\b[^.\n]{0,60}\b(?:contents?|credentials?|tokens?|secrets?|api keys?|passwords?|private keys?)\b[^.\n]{0,60}\b(?:to|at)\b[^.\n]{0,20}(?:https?://|webhook|server|endpoint)"
 )

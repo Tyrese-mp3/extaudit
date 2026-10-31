@@ -23,6 +23,7 @@ MAX_PACKAGE_BYTES = 256 * 1024 * 1024
 MAX_FILES = 20_000
 MAX_ZIP_RATIO = 200
 VIRUS_ERRORS = {225, 226}  # Windows: file contains a virus / potentially unwanted software
+JUNCTION_TAG = 0xA0000003  # Windows reparse tag for a directory junction
 
 ARCHIVE_SUFFIXES = {".mcpb", ".dxt", ".zip"}
 SKIP_DIRS = {".git", "__pycache__", ".venv", "venv", ".tox", ".mypy_cache", ".pytest_cache", ".ruff_cache"}
@@ -75,7 +76,7 @@ def load_archive(path: Path) -> Extension:
 
 
 def load_directory(root: Path) -> Extension:
-    extension = Extension(name=root.name, kind="source", location=str(root))
+    extension = Extension(name=root.resolve().name or str(root), kind="source", location=str(root))
     _read_tree(root, extension)
     _finish(extension)
     return extension
@@ -187,7 +188,12 @@ def _extension_roots(root: Path, depth: int) -> list[Path]:
 
 
 def _is_link(path: Path) -> bool:
-    return path.is_symlink() or path.is_junction()
+    if path.is_symlink():
+        return True
+    try:  # Path.is_junction needs Python 3.12, and os.walk follows junctions before that
+        return getattr(os.lstat(path), "st_reparse_tag", 0) == JUNCTION_TAG
+    except OSError:
+        return False
 
 
 def _read_tree(root: Path, extension: Extension) -> None:
